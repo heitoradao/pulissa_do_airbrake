@@ -32,5 +32,12 @@ class Group
     end
   end
 
+  def files_include?(query)
+    errors.any? do |error|
+      error.backtrace.any? do |b|
+        b.file.include?(query)
+      end
+    end
+  end
 end
 
