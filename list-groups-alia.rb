@@ -29,6 +29,7 @@ end
 
 h = JSON.parse(get_cached_json)
 
+groups = h['groups'].map {|g| Group.new(g) }
 
 
 binding.pry
