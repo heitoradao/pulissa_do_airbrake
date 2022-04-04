@@ -29,14 +29,6 @@ end
 
 h = JSON.parse(get_cached_json)
 
-def get_info(group)
-  file = group['errors'].first['backtrace'].first['file']
-
-  {
-    file: file,
-    line: group['errors'].first['backtrace'].first['line']
-  }
-end
 
 def filter_file(filename)
   start = filename.index('app')
