@@ -31,6 +31,10 @@ h = JSON.parse(get_cached_json)
 
 groups = h['groups'].map {|g| Group.new(g) }
 
+my_fault = groups.select do |g|
+  #g.blame_include?('Heitor') ||
+  g.files_include?('advance')
+end
 
 binding.pry
 
