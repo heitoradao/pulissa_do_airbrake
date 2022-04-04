@@ -15,6 +15,10 @@ Dir.glob('lib/*.rb').each { |lib| load lib }
 require 'dotenv'
 Dotenv.load('airbrake.env')
 
+def get_cached_json
+  File.read('data/20220404-1703-alia-groups.json')
+end
+
 def get_live_info
   key = ENV['AIRBRAKE_KEY']
   project_id = ENV['PROJECT_ID']
@@ -23,9 +27,7 @@ def get_live_info
   response.body
 end
 
-h = JSON.parse(response.body)
-
-groups = h['groups']
+h = JSON.parse(get_cached_json)
 
 def get_info(group)
   file = group['errors'].first['backtrace'].first['file']
