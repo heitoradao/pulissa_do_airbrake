@@ -21,6 +21,10 @@ class Backtrace
   end
 
   def get_blame
+    if is_platform?
+      platform_path = ENV['PLATFORM_PATH']
+      command = "git -C #{platform_path} blame #{remove_prefix(file)} -L #{line},#{line}"
+      `#{command}`
+    end
   end
 end
-
