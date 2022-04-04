@@ -15,7 +15,7 @@ Dir.glob('lib/*.rb').each { |lib| load lib }
 require 'dotenv'
 Dotenv.load('airbrake.env')
 
-
+def get_live_info
 key = ENV['AIRBRAKE_KEY']
 project_id = ENV['PROJECT_ID']
 
@@ -23,7 +23,8 @@ url = "https://api.airbrake.io/api/v4/projects/#{project_id}/groups?key=#{key}"
 
 response = Faraday.get(url)
 
-# TODO: testar o status da response
+response.body
+end
 
 h = JSON.parse(response.body)
 
