@@ -11,7 +11,20 @@ class Backtrace
     self.code = data['code']
   end
 
+  def is_platform?
+    file.start_with?('/PROJECT_ROOT/')
+  end
+
+  def remove_prefix(file)
+    #start = @file.index('app')
+    file[14..-1]
+  end
+
   def get_blame
+    if is_platform?
+      platform_path = ENV['PLATFORM_PATH']
+      command = "git -C #{platform_path} blame #{remove_prefix(file)} -L #{line},#{line}"
+      `#{command}`
+    end
   end
 end
-
