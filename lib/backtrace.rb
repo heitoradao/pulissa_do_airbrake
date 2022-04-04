@@ -11,6 +11,10 @@ class Backtrace
     self.code = data['code']
   end
 
+  def is_platform?
+    file.start_with?('/PROJECT_ROOT/')
+  end
+
   def remove_prefix(file)
     #start = @file.index('app')
     file[14..-1]
