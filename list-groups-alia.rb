@@ -30,17 +30,6 @@ end
 h = JSON.parse(get_cached_json)
 
 
-def filter_file(filename)
-  start = filename.index('app')
-  filename[start..-1]
-end
-
-def get_blame(filename, line)
-  platform_path = ENV['PLATFORM_PATH']
-  fixed_filename = filter_file(filename)
-  command = "git -C #{platform_path} blame #{fixed_filename} -L #{line},#{line}"
-  `#{command}`
-end
 
 binding.pry
 
