@@ -11,6 +11,11 @@ class Backtrace
     self.code = data['code']
   end
 
+  def remove_prefix(file)
+    #start = @file.index('app')
+    file[14..-1]
+  end
+
   def get_blame
   end
 end
