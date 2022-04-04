@@ -20,5 +20,17 @@ class Group
     self.notice_count = data['noticeCount']
     self.notice_total_count = data['noticeTotalCount']
   end
+
+  def blame_include?(query)
+    errors.any? do |error|
+      error.backtrace.any? do |b|
+        if b.is_platform?
+          blame = b.get_blame
+          blame&.include?(query)
+        end
+      end
+    end
+  end
+
 end
 
