@@ -21,8 +21,11 @@ end
 def get_live_info
   key = ENV['AIRBRAKE_KEY']
   project_id = ENV['PROJECT_ID']
-  url = "https://api.airbrake.io/api/v4/projects/#{project_id}/groups?key=#{key}"
-  response = Faraday.get(url)
+  params = { key: key }
+  # url = "https://api.airbrake.io/api/v4/groups"
+  url = "https://api.airbrake.io/api/v4/projects/#{project_id}/groups"
+  response = Faraday.get(url, params)
+  File.write('data/cached.json', response.body)
   response.body
 end
 
