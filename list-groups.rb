@@ -9,11 +9,10 @@ require 'pry'
 require 'faraday'
 require 'json'
 
-
 Dir.glob('lib/*.rb').each { |lib| load lib }
 
 require 'dotenv'
-Dotenv.load('airbrake.env')
+Dotenv.load
 
 def get_cached_json
   File.read('data/20220404-1703-alia-groups.json')
