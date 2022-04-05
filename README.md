@@ -33,6 +33,8 @@ It will fetch data from airbrake, parse them, and open a pry's terminal where yo
 In the variable `groups` you will have the first 100 error groups from airbrake.
 In `my_fault`, there is a filtered list.
 
+![pry-each](https://github.com/heitoradao/pulissa_do_airbrake/blob/main/docs/pry-each.png?raw=true)
+
 
 ## TODO
 
