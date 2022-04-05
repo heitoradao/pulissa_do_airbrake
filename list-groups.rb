@@ -15,7 +15,7 @@ require 'dotenv'
 Dotenv.load
 
 def get_cached_json
-  File.read('data/20220404-1703-alia-groups.json')
+  File.read('data/cached.json')
 end
 
 def get_live_info
