@@ -16,7 +16,7 @@ class Group
     self.errors = Array.new(data['errors'].size) {|i| Error.new(data['errors'][i]) }
     self.context = data['context']
     self.last_notice_id = data['lastNoticeId']
-    self.last_notice_at = data['lastNoticeAt']
+    self.last_notice_at = DateTime.parse(data['lastNoticeAt'])
     self.notice_count = data['noticeCount']
     self.notice_total_count = data['noticeTotalCount']
   end
