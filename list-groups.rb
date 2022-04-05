@@ -29,7 +29,8 @@ def get_live_info
   response.body
 end
 
-h = JSON.parse(get_cached_json)
+raw_json = get_live_info
+#raw_json = get_cached_json
 
 begin
   h = JSON.parse(raw_json)
