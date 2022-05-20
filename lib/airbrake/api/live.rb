@@ -25,8 +25,8 @@ module Airbrake
 
         def normalize_reponse(response)
           JSON.parse(response.body) || {}
-        rescue StandartError => e
-          return { errors: e.errors.messages}
+        rescue JSON::ParserError => e
+          puts e.message
         end
       end
     end
