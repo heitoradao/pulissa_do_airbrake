@@ -36,10 +36,10 @@ module Ui
         puts menu_introduction
         puts menu_option
 
-        select_option([load_projects, select_project])
-        puts entry_number
+        select_option(options: [load_projects, select_project])
+        puts description_entry_number
 
-        option_number = gets.chomp
+        option_number = gets.chomp.to_i
         option_number
       end
 
@@ -50,12 +50,12 @@ module Ui
         when option == 2
           puts "Working on it. Thank U"
         else
-          puts "Option invalid"
+          puts "Invalid Option"
         end
       end
 
       def load_projets_presentation
-        projects = ::Airbrake::API::Live.list_projects['projects']
+        projects = ::Airbrake::API::Mock.list_projects['projects']
 
         list_with_id_and_name =
           projects.map { |project| project.slice("id", "name") }
@@ -67,13 +67,13 @@ module Ui
 
       def select_option(options: [])
         options.each_with_index do |option, option_number|
-          puts "#{option_number++} ) #{option}"
+          puts "#{option_number + 1} ) #{option}"
         end
       end
 
       def list_projects(projects)
-        list_with_id_and_name.each do |project|
-          puts "- Project: #{project[:name]} - ID: #{project[:id]} -"
+        projects.each do |project|
+          puts "- Project: #{project["name"]} - ID: #{project["id"]} -"
         end
       end
     end
