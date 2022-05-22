@@ -9,3 +9,4 @@ Dotenv.load
 Dir.glob('lib/**/*.rb').each { |lib| load lib }
 
 Ui::Main.introduction
+option_number = Ui::Main.menu
