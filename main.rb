@@ -2,6 +2,7 @@ require 'pry'
 require 'faraday'
 require 'json'
 require 'date'
+require 'faker'
 require 'active_support'
 require 'dotenv'
 Dotenv.load
