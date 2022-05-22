@@ -39,8 +39,28 @@ module Ui
         select_option([load_projects, select_project])
         puts entry_number
 
-        entry_number = gets.chomp
-        entry_number
+        option_number = gets.chomp
+        option_number
+      end
+
+      def presentation_of_option(option)
+        case
+        when option == 1
+          load_projets_presentation
+        when option == 2
+          puts "Working on it. Thank U"
+        else
+          puts "Option invalid"
+        end
+      end
+
+      def load_projets_presentation
+        projects = ::Airbrake::API::Live.list_projects['projects']
+
+        list_with_id_and_name =
+          projects.map { |project| project.slice("id", "name") }
+
+        list_projects(list_with_id_and_name)
       end
 
       private
@@ -48,6 +68,12 @@ module Ui
       def select_option(options: [])
         options.each_with_index do |option, option_number|
           puts "#{option_number++} ) #{option}"
+        end
+      end
+
+      def list_projects(projects)
+        list_with_id_and_name.each do |project|
+          puts "- Project: #{project[:name]} - ID: #{project[:id]} -"
         end
       end
     end
