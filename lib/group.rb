@@ -39,5 +39,9 @@ class Group
       end
     end
   end
+
+  def url
+    "https://iugu.airbrake.io/projects/#{project_id}/groups/#{id}"
+  end
 end
 
