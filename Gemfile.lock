@@ -1,9 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.0.5)
+    activesupport (5.2.4.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (~> 0.7)
+      i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     chronic (0.10.2)
@@ -19,10 +19,10 @@ GEM
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
-    i18n (0.9.5)
+    i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     method_source (1.0.0)
-    minitest (5.15.0)
+    minitest (5.16.2)
     multipart-post (2.1.1)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -36,6 +36,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   activesupport
