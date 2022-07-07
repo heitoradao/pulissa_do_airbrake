@@ -43,5 +43,8 @@ class Group
   def url
     "https://iugu.airbrake.io/projects/#{project_id}/groups/#{id}"
   end
-end
 
+  def notices
+    @notices ||= Notice.fetch_notices(project_id, id)
+  end
+end
