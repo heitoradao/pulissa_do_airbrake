@@ -55,10 +55,10 @@ module Ui
       end
 
       def load_projets_presentation
-        projects = ::Airbrake::API::Mock.list_projects['projects']
+        projects = ::Airbrake::API::Live.list_projects['projects']
 
         list_with_id_and_name =
-          projects.map { |project| project.slice("id", "name") }
+          projects.map { |project| project.slice('id', 'name') }
 
         list_projects(list_with_id_and_name)
       end
