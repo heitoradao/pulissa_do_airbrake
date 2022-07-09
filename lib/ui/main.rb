@@ -61,7 +61,7 @@ module Ui
       end
 
       def load_projets_presentation
-        projects = ::Airbrake::API::Live.list_projects['projects']
+        projects = charge_projects
 
         list_with_id_and_name =
           projects.map { |project| project.slice('id', 'name') }
@@ -80,6 +80,22 @@ module Ui
       def list_projects(projects)
         projects.each do |project|
           puts "- Project: #{project["name"]} - ID: #{project["id"]} -"
+        end
+      end
+
+      def charge_projects
+        if File.exist?('./data/projects.json')
+          projects = File.read('./data/projects.json')
+          JSON.parse(projects)
+        else
+          projects = ::Airbrake::API::Live.list_projects['projects']
+
+          FileHandler::Main.generate_file(
+            file_name: "projects",
+            body: projects
+          )
+
+          projects
         end
       end
     end
