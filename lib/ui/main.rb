@@ -27,16 +27,20 @@ module Ui
 
       def menu
         menu_introduction = "Pulisse Menu"
-        menu_option = "You have 2 options:"
         load_projects = "Load Projects"
         select_project = "Select Project or Projects"
+        program_exit = "Exit"
+
+        options = [load_projects, select_project, program_exit]
+        menu_option = "You have #{options.size} options:"
 
         description_entry_number = "Select a option number:"
 
+        puts "\n"
         puts menu_introduction
         puts menu_option
 
-        select_option(options: [load_projects, select_project])
+        select_option(options: options)
         puts description_entry_number
 
         option_number = gets.chomp.to_i
@@ -49,6 +53,8 @@ module Ui
           load_projets_presentation
         when option == 2
           puts "Working on it. Thank U"
+        when option == 3
+          puts "Iuiuiuiuiu ..."
         else
           puts "Invalid Option"
         end
