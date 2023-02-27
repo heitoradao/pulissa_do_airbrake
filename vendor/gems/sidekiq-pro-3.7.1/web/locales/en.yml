@@ -1,0 +1,17 @@
+en:
+  Batch: Batch %{bid}
+  Batches: Batches
+  NoBatchesFound: No batches found
+  Description: Description
+  Size: Size
+  Pending: Pending
+  Job: Job
+  Class: Class
+  Failures: Failures
+  ErrorMessage: Error Message
+  ErrorBacktrace: Error Backtrace
+  Started: Started
+  JobCount: Job Count
+  Failed: Failed
+  Status: Status
+  Parent: Parent

@@ -1,0 +1,118 @@
+<style type="text/css">
+  .backtrace { line-height: 14px; }
+  .backtrace-container { overflow-x: scroll; }
+</style>
+
+<header class="row">
+  <div class="col-sm-5">
+    <h3><%= t('Batch', :bid => @batch.bid) %></h3>
+  </div>
+</header>
+
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <th><%= t('Status') %></th>
+      <td>
+        <div class="progress" style="margin-bottom: 0">
+          <div class="progress-bar progress-bar-success" style="width: <%= @batch.success_pct %>%;"></div>
+          <div class="progress-bar progress-bar-warning" style="width: <%= @batch.pending_pct %>%;"></div>
+          <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: <%= @batch.failure_pct %>%;"></div>
+        </div>
+      </td>
+    </tr>
+    <% if @batch.description && @batch.description.size > 0 %>
+      <tr>
+        <th><%= t('Description') %></th>
+        <td><%=h @batch.description %></td>
+      </tr>
+    <% end %>
+    <% if @batch.parent_bid %>
+    <tr>
+      <th><%= t('Parent') %></th>
+      <td><a href="<%= "#{root_path}batches/#{@batch.parent_bid}" %>"><%= @batch.parent_bid %></a>
+    </tr>
+    <% end %>
+    <% if @batch.callbacks['complete'] %>
+    <tr>
+      <th>Complete</th>
+      <td>
+        <% @batch.callbacks['complete'].each do |hash| %>
+          <%= hash.keys.first %>: <%= h hash.values.first.inspect %><br/>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    <% if @batch.callbacks['success'] %>
+    <tr>
+      <th>Success</th>
+      <td>
+        <% @batch.callbacks['success'].each do |hash| %>
+          <%= hash.keys.first %>: <%= h hash.values.first.inspect %><br/>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    <tr>
+      <th><%= t('Created') %></th>
+      <td><%= relative_time(@batch.created_at) %></td>
+    </tr>
+    <tr>
+      <th><%= t('Expires') %></th>
+      <td><%= relative_time(@batch.expires_at) %></td>
+    </tr>
+    <tr>
+      <th><%= t('Size') %></th>
+      <td><%= @batch.total %></td>
+    </tr>
+    <tr>
+      <th><%= t('Pending') %></th>
+      <td><%= @batch.pending %></td>
+    </tr>
+    <tr>
+      <th><%= t('Failures') %></th>
+      <td><%= @batch.failures %></td>
+    </tr>
+    <% if @batch.failures > 0 %>
+    <tr>
+      <th>Retries</th>
+      <td>
+        <div class="sm-col-3" style="display: inline; margin: 25px 15px 0 0;">
+          <form method="POST" action='<%= root_path %>filter/retries' style="display: inline-block">
+            <%= csrf_tag %>
+            <input class="search" type="hidden" name="substr" value="<%= h @batch.bid %>"/>
+            <input class="btn" type="submit" value="Search"/>
+          </form>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+    <% if @batch.pending < 10 %>
+    <tr>
+      <th>Pending JIDs</th>
+      <td><%= @batch.jids.join(", ") %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% fails = @batch.failure_info %>
+<% if fails.size > 0 %>
+  <h1><%= t('Failures') %></h1>
+  <table class="table table-striped table-bordered">
+    <tbody>
+      <tr>
+        <th><%= t('Job') %></th>
+        <th><%= t('Class') %></th>
+        <th><%= t('ErrorMessage') %></th>
+      </tr>
+      <% fails.each do |failure| %>
+        <tr>
+          <td><%= filter_link(failure.jid) %></td>
+          <td><%= h failure.error_class %></td>
+          <td><%= h failure.error_message %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

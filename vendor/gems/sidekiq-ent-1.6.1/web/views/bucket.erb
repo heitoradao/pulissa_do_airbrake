@@ -1,0 +1,33 @@
+<header class="row">
+  <div class="col-sm-5">
+    <h3><%= h @limit.name %></h3>
+  </div>
+</header>
+
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <th><%= t('Type') %></th>
+      <td><%= @limit.type_name %></td>
+    </tr>
+    <tr>
+      <th><%= t('Size') %></th>
+      <td><%= @limit.size %> / <%= @limit.interval %></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class= "dashboard clearfix">
+  <h3 >
+    <%= t('History') %>
+  </h3>
+</div>
+
+<div class="row chart">
+  <div id="history" data-requested-label="<%= t('Attempts') %>" data-requested="<%= h Sidekiq.dump_json(@limit.history) %>"></div>
+  <div id="history-legend"></div>
+</div>
+
+<script type="text/javascript">
+<%= File.read("#{Sidekiq::Enterprise::Web::ROOT}/assets/javascripts/bucket-history.js") %>
+</script>

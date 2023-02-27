@@ -1,0 +1,85 @@
+<% add_to_head do %>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<% end %>
+
+<header class="row">
+  <div class="col-sm-5">
+    <h3><%= h @limit.name %></h3>
+  </div>
+</header>
+
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <th><%= t('Status') %></th>
+      <td>
+        <div class="progress" style="margin-bottom: 0">
+          <div class="progress-bar progress-bar-warning" style="width: <%= @limit.used_pct %>%;"></div>
+          <div class="progress-bar progress-bar-success" style="width: <%= @limit.available_pct %>%;"></div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t('Type') %></th>
+      <td><%= @limit.type_name %></td>
+    </tr>
+    <tr>
+      <th><%= t('Size') %></th>
+      <td><%= @limit.size %></td>
+    </tr>
+    <tr>
+      <th><%= t('Available') %></th>
+      <td><%= @limit.available %></td>
+    </tr>
+    <tr>
+      <th><%= t('InUse') %></th>
+      <td><%= @limit.used %></td>
+    </tr>
+  </tbody>
+</table>
+
+<header class="row">
+  <div class="col-sm-6">
+    <h3>
+      <%= t('Metrics') %>
+      <a href="https://github.com/mperham/sidekiq/wiki/Ent-Rate-Limiting#concurrent-metrics"><span style="font-size: 0.8em" class="fa fa-question-circle" aria-hidden="true"></span></a>
+    </h3>
+  </div>
+</header>
+
+<style>
+  .tip { font-size: x-small; }
+</style>
+
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <th width="20%"><%= t('Held') %></th>
+      <td><%= @limit.held %></td>
+    </tr>
+    <tr>
+      <th><%= t('HoldTime') %></th>
+      <td><%= @limit.held_time %></td>
+    </tr>
+    <tr>
+      <th><%= t('Immediate') %></th>
+      <td><%= @limit.immediate %></td>
+    </tr>
+    <tr>
+      <th><%= t('Waited') %></th>
+      <td><%= @limit.waited %></td>
+    </tr>
+    <tr>
+      <th><%= t('WaitTime') %></th>
+      <td><%= @limit.wait_time %></td>
+    </tr>
+    <tr>
+      <th><%= t('Overages') %></th>
+      <td><%= @limit.overtime %></td>
+    </tr>
+    <tr>
+      <th><%= t('Reclaimed') %></th>
+      <td><%= @limit.reclaimed %></td>
+    </tr>
+  </tbody>
+</table>

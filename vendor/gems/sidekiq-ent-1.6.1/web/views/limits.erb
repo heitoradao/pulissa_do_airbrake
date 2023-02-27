@@ -1,0 +1,32 @@
+<header class="row">
+  <div class="col-sm-5">
+    <h3><%= t('Limits') %></h3>
+  </div>
+</header>
+
+<% if @results.size > 0 %>
+  <table class="table table-striped table-bordered table-white">
+    <tr>
+      <th><%= t('Name') %></th>
+      <th><%= t('Type') %></th>
+      <th><%= t('Size') %></th>
+    </tr>
+  <% @results.each_with_index do |limit, idx| %>
+    <tr>
+      <td><a href="<%= root_path %>limits/<%= limit.key %>"><%= limit.name %></a></td>
+      <td><%= limit.type_name %></td>
+      <td><%= limit.rate %></td>
+    </tr>
+  <% end %>
+  </table>
+  <% if @next.to_i != 0 %>
+    <ul class="pagination pull-right">
+      <li>
+        <a href="?<%= qparams(page: @next) %>"><%= t("Next") %></a>
+      </li>
+    </ul>
+  <% end %>
+
+<% else %>
+  <div class="alert alert-success"><%= t('NoLimitsFound') %></div>
+<% end %>

@@ -1,0 +1,49 @@
+<header class="row">
+  <div class="col-sm-5">
+    <h3><%= t('Batches') %></h3>
+  </div>
+  <div class="col-sm-4">
+    <% if @batches.size > 0 %>
+      <%= erb :_paging, :locals => { :url => "#{root_path}batches" } %>
+    <% end %>
+  </div>
+</header>
+
+<% if @batches.size > 0 %>
+
+    <table class="table table-striped table-bordered table-white">
+      <tr>
+        <th><%= t('Started') %></th>
+        <th><%= t('Description') %></th>
+        <th><%= t('JobCount') %></th>
+        <th><%= t('Pending') %></th>
+        <th><%= t('Failed') %></th>
+        <th style="width: 50%"><%= t('Status') %></th>
+      <% @batches.each do |bid, _| %>
+        <%
+           begin
+            status = Sidekiq::Batch::Status.new(bid)
+           rescue Sidekiq::Batch::NoSuchBatch
+             next
+           end
+        %>
+        <tr>
+          <td><a href="<%= root_path %>batches/<%= status.bid %>"><%= relative_time(status.created_at.utc) %></a></td>
+          <td><%=h status.description %></td>
+          <td><%= status.total %></td>
+          <td><%= status.pending %></td>
+          <td><%= status.failures %></td>
+          <td>
+            <div class="progress" style="margin-bottom: 0">
+              <div class="progress-bar progress-bar-success" style="width: <%= status.success_pct %>%;"></div>
+              <div class="progress-bar progress-bar-warning" style="width: <%= status.pending_pct %>%;"></div>
+              <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: <%= status.failure_pct %>%;"></div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+<% else %>
+  <div class="alert alert-success"><%= t('NoBatchesFound') %></div>
+<% end %>

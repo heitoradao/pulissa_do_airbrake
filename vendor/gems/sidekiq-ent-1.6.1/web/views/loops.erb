@@ -1,0 +1,29 @@
+<header class="row">
+  <div class="col-sm-5">
+    <h3><%= t('Loops') %></h3>
+  </div>
+</header>
+
+<% if @loops.size > 0 %>
+
+  <table class="table table-striped table-bordered table-white">
+    <tr>
+      <th><%= t('Schedule') %></th>
+      <th><%= t('Class') %></th>
+      <th><%= t('Options') %></th>
+      <th><%= t('Next Run') %></th>
+    </tr>
+
+    <% @loops.each_with_index do |loup, idx| %>
+      <tr>
+        <td><tt><a href="<%= root_path %>loops/<%= loup.lid %>"><%= loup.schedule %></a></tt></td>
+        <td><a href="<%= root_path %>loops/<%= loup.lid %>"><%= loup.klass %></a></td>
+        <td><%= loup.options.inspect %></td>
+        <td><%= Time.at(loup.next_run) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <div class="alert alert-success"><%= t('NoLoopsFound') %></div>
+<% end %>

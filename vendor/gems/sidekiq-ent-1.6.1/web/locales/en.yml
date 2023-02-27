@@ -1,0 +1,18 @@
+en:
+  Limits: Limits
+  NoLimitsFound: No limits found
+  Size: Size
+  Name: Name
+  Type: Type
+  InUse: In Use
+  Loop: Periodic Job
+  Loops: Periodic Jobs
+  NoLoopsFound: No periodic jobs found
+  Schedule: Schedule
+  Options: Options
+  Held: Held
+  HoldTime: Hold Time
+  Waited: Waited
+  WaitTime: Wait Time
+  Overages: Overages
+  Reclaimed: Reclaimed

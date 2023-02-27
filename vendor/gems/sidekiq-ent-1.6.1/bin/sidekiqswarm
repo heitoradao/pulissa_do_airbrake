@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+# Quiet some warnings we see when running in warning mode:
+# RUBYOPT=-w bundle exec sidekiq
+$TESTING = false
+
+if ARGV.size == 1 || ARGV.any? {|x| %w(-i -d -P -L --logfile --pidfile --daemon --index).include?(x) }
+  puts "sidekiqswarm [options]"
+  puts ""
+  puts "Start and supervise a swarm of Sidekiq processes."
+  puts "All arguments are passed to each Sidekiq instance."
+  puts ""
+  puts "You may not use the `-d`, `-L` or `-P` options."
+  puts ""
+  puts "Use the SIDEKIQ_* environment variables to control sidekiqswarm."
+  puts ""
+  puts "SIDEKIQ_COUNT\tNumber of Sidekiq child processes to start, defaults to number of cores"
+  puts "SIDEKIQ_MAXMEM_MB\tMax RSS size in MB of child process before the parent will restart it"
+  puts "SIDEKIQ_PRELOAD\tComma-separated list of Bundler groups to preload before forking"
+  puts ""
+  puts "Example:"
+  puts "SIDEKIQ_COUNT=5 SIDEKIQ_MAXMEM_MB=300 bundle exec bin/sidekiqswarm -r ./myworker.rb"
+  exit(-1)
+end
+
+# Control Bundler groups to preload with:
+#
+#   SIDEKIQ_PRELOAD=default,assets bin/sidekiqswarm ...
+#
+# Preload no groups (for maximum compatibility) like so:
+#
+#   SIDEKIQ_PRELOAD= bin/sidekiqswarm ...
+#
+groups = (ENV["SIDEKIQ_PRELOAD"] || "default").split(",")
+
+# must require the CLI before booting Bundler so the
+# gems know that we are in server-mode
+require 'sidekiq/cli'
+require 'bundler/setup'
+if groups.size > 0
+  puts "[swarm] Preloading Bundler groups #{groups.inspect}"
+  Bundler.require(*groups)
+end
+
+# the more code we can load before here, the more memory we can share
+# between all child processes.  We can't load the Rails app but we can
+# boot Bundler and all the gems.
+
+require 'sidekiq-ent/swarm'
+swarm = Sidekiq::Enterprise::Swarm.new
+swarm.start_and_monitor
